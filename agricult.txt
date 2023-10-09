@@ -1,0 +1,69 @@
+#include <SoftwareSerial.h>
+
+
+const int buttonPin1 = 2;     // the number of the pushbutton pin
+const int buttonPin2 = 4;
+const int remo = 7;  
+const int ledPin1 =  12;  
+const int ledPin2 =  8;  // the number of the LED pin
+const int analogInPin = A0;
+       // value read from the pot
+
+
+
+// variables will change:
+int buttonState1 = 0;  
+int buttonState2 = 0;  // variable for reading the pushbutton status
+
+void setup() {
+  // initialize the LED pin as an output:
+  Serial.begin(9600);
+  pinMode(ledPin1, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin1, INPUT);
+  pinMode(ledPin2, OUTPUT);
+  pinMode(remo, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin2, INPUT);
+   
+}
+
+void loop() {
+  // read the state of the pushbutton value:
+  
+ 
+  buttonState1 = digitalRead(buttonPin1);
+  buttonState2 = digitalRead(buttonPin2);
+int sensorValue = analogRead(A0);
+  // Convert the analog reading (which goes from 0 - 1023) to a voltage (0 - 5V):
+  float level = (100-sensorValue * (100.0 / 1023.0));
+  // print out the value you read:
+  Serial.println(level);
+  
+  
+  if (level < 40) {
+      
+    // turn LED off:
+    digitalWrite(remo, LOW);
+  }else {digitalWrite(remo,HIGH);}
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  if (buttonState1 == HIGH) {
+    // turn LED on:
+    
+digitalWrite(ledPin1 , HIGH);
+
+  } else {
+    // turn LED off:
+    digitalWrite(ledPin1 , LOW);
+    if (buttonState2 == HIGH)
+    {
+    digitalWrite(ledPin2, HIGH);
+   }
+    else {digitalWrite(remo, LOW);
+    digitalWrite(ledPin2, LOW);}
+    }
+  
+ 
+ 
+}
